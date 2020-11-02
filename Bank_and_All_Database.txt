@@ -1,0 +1,27 @@
+Bank Database Table : 
+bankstatement.executeUpdate("drop table if exists BankTable");
+bankstatement.executeUpdate("create table BankTable (id integer, name varchar(255), nationalid varchar(255), bankid varchar(255), accnumber varchar(255), pin integer, balance integer)");
+bankstatement.executeUpdate("insert into BankTable values(1, 'Sagar Singh', 'IN001', 'SA001', 'ANS001', 9080, 5000)");
+bankstatement.executeUpdate("insert into BankTable values(2, 'Ramesh Singh', 'IN002', 'SA002', 'ANS002', 1010, 20000)");
+bankstatement.executeUpdate("insert into BankTable values(3, 'Anuja Singh', 'IN003', 'SA003', 'ANS110', 9587, 2100)");
+bankstatement.executeUpdate("insert into BankTable values(4, 'Janed Singh', 'IN004', 'SA004', 'ANS115', 3582, 3000)");
+bankstatement.executeUpdate("insert into BankTable values(5, 'Vinod Singh', 'IN005', 'SA005', 'ANS220',1302, 2000)");
+bankstatement.executeUpdate("insert into BankTable values(6, 'Rohan Singh', 'IN006', 'SA006', 'ANS200', 1125, 1500)");
+bankstatement.executeUpdate("insert into BankTable values(7, 'Hemant Singh', 'IN007', 'SA007', 'ANS119', 7998, 7000)");
+bankstatement.executeUpdate("insert into BankTable values(8, 'Sachin Singh', 'IN008', 'SA008', 'ANS120', 8251, 11000)");
+
+AllBank Database Table : 
+allStatement.executeUpdate("drop table if exists AllBankTable");
+allStatement.executeUpdate("create table AllBankTable (id integer, name varchar(255), nationalid varchar(255), bankid varchar(255), accnumber varchar(255), pin integer, balance integer)");
+allStatement.executeUpdate("insert into AllBankTable values(1, 'Sagar Singh', 'IN001', 'SA001', 'ANS001', 9080, 5000)");
+allStatement.executeUpdate("insert into AllBankTable values(2, 'Ramesh Singh', 'IN002', 'SA002', 'ANS002', 1010, 20000)");
+allStatement.executeUpdate("insert into AllBankTable values(3, 'Anuja Singh', 'IN003', 'SA003', 'ANS110', 9587, 2100)");
+allStatement.executeUpdate("insert into AllBankTable values(4, 'Janed Singh', 'IN004', 'SA004', 'ANS115', 3582, 3000)");
+allStatement.executeUpdate("insert into AllBankTable values(5, 'Vinod Singh', 'IN005', 'SA005', 'ANS220',1302, 2000)");
+allStatement.executeUpdate("insert into AllBankTable values(6, 'Rohan Singh', 'IN006', 'SA006', 'ANS200', 1125, 1500)");
+allStatement.executeUpdate("insert into AllBankTable values(7, 'Hemant Singh', 'IN007', 'SA007', 'ANS119', 7998, 7000)");
+allStatement.executeUpdate("insert into AllBankTable values(8, 'Sachin Singh', 'IN008', 'SA008', 'ANS120', 8251, 11000)");
+allStatement.executeUpdate("insert into AllBankTable values(9, 'Pooja Singh', 'IN009', 'RR009', 'ANR100', 9999, 23000)");
+allStatement.executeUpdate("insert into AllBankTable values(10, 'Pranit Singh', 'IN010', 'JC010', 'ANJ050', 1221, 8000)");
+allStatement.executeUpdate("insert into AllBankTable values(11, 'Nawaz Singh', 'IN011', 'RR011', 'ANR099', 1552, 10000)");
+allStatement.executeUpdate("insert into AllBankTable values(12, 'Jyoti Singh', 'IN012', 'JC012', 'ANJ300', 4605, 2500)");
