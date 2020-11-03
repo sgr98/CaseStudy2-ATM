@@ -1,11 +1,11 @@
 package Database;
 
 public interface databaseInterface {
-    public void establishDB();
-    public int getIndexByBankID(String bankID);
-    public void closeConnection();
-    public String getAccountNumber(int index);
-    public int getPIN(int index);
-    public int getBalance(int index);
-    public void updateBalance(int index, int newbal);
+    public void establishDB(); // To initiate the database (Once implemented, then it can be commented and used multiple times)
+    public int getIndexByBankID(String bankID); // To get index of an account using the bank ID
+    public void closeConnection(); // To close the connection to the database once the bank is bankrupt
+    public String getAccountNumber(int index); // To get the account Number from DB using the index
+    public int getPIN(int index); // To get the PIN number from DB using the index
+    public int getBalance(int index); // To get the current balance from DB using the index
+    public void updateBalance(int index, int newbal); // To update balance present in DB during a transaction
 }

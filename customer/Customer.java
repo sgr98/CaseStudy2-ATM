@@ -7,31 +7,31 @@ public class Customer {
     private String accNum;
     private int balance;
 
-    public void setIndex(int id) {
+    public void setIndex(int id) { // TO set index pointing in the datebase
         this.index = id;
     }
 
-    public int getIndex() {
+    public int getIndex() { // TO get index pointing in the datebase
         return index;
     }
 
-    public void setBankID(String bid) {
+    public void setBankID(String bid) { // TO set Bank ID pointing in the datebase
         this.bankId = bid;
     }
 
-    public void setAccountNumber(String accountNumber) {
+    public void setAccountNumber(String accountNumber) { // TO set Acoount Number pointing in the datebase
         this.accNum = accountNumber;
     }
 
-    public String getAccountNumber() {
+    public String getAccountNumber() { // TO get Account Number pointing in the datebase
         return accNum;
     }
 
-    public void setBalance(int bal) {
+    public void setBalance(int bal) { // TO set Balance pointing in the datebase
         this.balance = bal;
     }
 
-    public int getBalance() {
+    public int getBalance() { // TO get Balance pointing in the datebase
         return balance;
     }
 

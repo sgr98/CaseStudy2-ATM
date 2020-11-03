@@ -3,13 +3,6 @@ import Database.BankDatabase;
 import Database.AllDatabase;
 import customer.Customer;
 
-interface atm {
-    public void closeBank();
-    public void bankenterance();
-    public void login();
-    public void screen();
-}
-
 // ATM Class to replicate an ATM
 class ATM {
 
@@ -29,12 +22,16 @@ class ATM {
         customer = new Customer();
     }
 
-    private void closeBank() {
+    private void closeBank() { // To close the bank and its databases
         BankDB.closeConnection();
         AllDB.closeConnection();
     }
 
-    public void enter() {
+    public void start() { // To start the program from the main class
+        enter();
+    }
+
+    private void enter() { // To demonstrate a customer entering an ATM
 
         while(true) { // A customer walks in
 
@@ -89,7 +86,7 @@ class ATM {
 
     }
 
-    public void bankenterance() { // Same as inserting a card
+    private void bankenterance() { // Same as inserting a card replaced with a bank ID
 
         while(true) {
 
@@ -129,7 +126,7 @@ class ATM {
 
     }
 
-    public void login() {
+    private void login() { // To login into your bank account
 
         while(true) {
 
@@ -167,7 +164,7 @@ class ATM {
 
     }
 
-    public void screen() {
+    private void screen() { // The main screen showing and providing the options to check balance, withdraw and deposit money
 
         while(true) {
 
@@ -209,23 +206,22 @@ class ATM {
 
     }
 
-    public void setCustomerBalance() {
+    private void setCustomerBalance() { // To set customer balance in the customer object from the database
         int bal = AllDB.getBalance( customer.getIndex() );
         customer.setBalance(bal);
     }
 
-    public void setCustomerBalance(int bal) {
+    private void setCustomerBalance(int bal) { // To set customer balance in the customer object using a balance parameter
         customer.setBalance(bal);
     }
 
-    public void withdraw() {
+    private void withdraw() { // To withdraw money from your account
 
         while(true) {
 
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
             System.out.println("Your balance is : " + customer.getBalance());
             System.out.println("Please enter the amount of money you want to withdraw");
-
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 
             int with = in.nextInt();
@@ -252,7 +248,7 @@ class ATM {
 
     }
 
-    public void deposit() {
+    private void deposit() { // To deposit money into an account
 
         while(true) {
 
@@ -358,8 +354,8 @@ public class CaseStudy2 {
 
     public static void main(String[] args) {
 
-        ATM atm = new ATM();
-        atm.enter();
+        ATM atm = new ATM(); // Instantiating the ATM object
+        atm.start(); // Starting the ATM
 
     }
 
