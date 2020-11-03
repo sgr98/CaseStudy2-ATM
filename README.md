@@ -2,15 +2,21 @@
 
 ## Rules to follow for execution : 
 Use these commands in the main directory - 
+
 >javac CaseStudy2.java
+
 
 Then use this command for Windows :
 
+
 >java -classpath ".;sqlite-jdbc-3.32.3.2.jar" CaseStudy2
+
 
 Or use this command for MacOS and Linux :
 
+
 >java -classpath ".:sqlite-jdbc-3.32.3.2.jar" CaseStudy2 
+
 
 You can follow this link to the official documentation : [Xerial](https://github.com/xerial/sqlite-jdbc/blob/master/README.md)
 
@@ -23,3 +29,5 @@ Other than this I have implemented a databaseinterface which is implemented by B
 The last class is Customer Class representing a customer.
 
 The Password to dissolve the bank (terminate the program) is : GOD
+
+You can also view [my repository](https://github.com/sgr98/CaseStudy2-ATM) at this link. 
