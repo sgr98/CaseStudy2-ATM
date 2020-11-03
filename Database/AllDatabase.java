@@ -27,26 +27,26 @@ public class AllDatabase implements databaseInterface {
             // DATABASE FORMED *********
             // allStatement.executeUpdate("drop table if exists AllBankTable");
             // allStatement.executeUpdate("create table AllBankTable (id integer, name varchar(255), nationalid varchar(255), bankid varchar(255), accnumber varchar(255), pin integer, balance integer)");
-            // allStatement.executeUpdate("insert into AllBankTable values(1, 'Sagar Singh', 'IN001', 'SA001', 'ANS001', 9080, 5000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(2, 'Ramesh Singh', 'IN002', 'SA002', 'ANS002', 1010, 20000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(3, 'Anuja Singh', 'IN003', 'SA003', 'ANS110', 9587, 2100)");
-            // allStatement.executeUpdate("insert into AllBankTable values(4, 'Janed Singh', 'IN004', 'SA004', 'ANS115', 3582, 3000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(5, 'Vinod Singh', 'IN005', 'SA005', 'ANS220',1302, 2000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(6, 'Rohan Singh', 'IN006', 'SA006', 'ANS200', 1125, 1500)");
-            // allStatement.executeUpdate("insert into AllBankTable values(7, 'Hemant Singh', 'IN007', 'SA007', 'ANS119', 7998, 7000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(8, 'Sachin Singh', 'IN008', 'SA008', 'ANS120', 8251, 11000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(9, 'Pooja Singh', 'IN009', 'RR009', 'ANR100', 9999, 23000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(10, 'Pranit Singh', 'IN010', 'JC010', 'ANJ050', 1221, 8000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(11, 'Nawaz Singh', 'IN011', 'RR011', 'ANR099', 1552, 10000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(12, 'Jyoti Singh', 'IN012', 'JC012', 'ANJ300', 4605, 2500)");
+            // allStatement.executeUpdate("insert into AllBankTable values(1, 'Sagar Singh', 'IN001', 'SA001', '01001', 9080, 5000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(2, 'Ramesh Singh', 'IN002', 'SA002', '01002', 1010, 20000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(3, 'Anuja Singh', 'IN003', 'SA003', '01110', 9587, 2100)");
+            // allStatement.executeUpdate("insert into AllBankTable values(4, 'Janed Singh', 'IN004', 'SA004', '01115', 3582, 3000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(5, 'Vinod Singh', 'IN005', 'SA005', '01220',1302, 2000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(6, 'Rohan Singh', 'IN006', 'SA006', '01200', 1125, 1500)");
+            // allStatement.executeUpdate("insert into AllBankTable values(7, 'Hemant Singh', 'IN007', 'SA007', '01119', 7998, 7000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(8, 'Sachin Singh', 'IN008', 'SA008', '01120', 8251, 11000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(9, 'Pooja Singh', 'IN009', 'RR009', '02100', 9999, 23000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(10, 'Pranit Singh', 'IN010', 'JC010', '03050', 1221, 8000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(11, 'Nawaz Singh', 'IN011', 'RR011', '02099', 1552, 10000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(12, 'Jyoti Singh', 'IN012', 'JC012', '03300', 4605, 2500)");
 
-            ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
-            while(rs.next()) {
-                // read the result set
-                System.out.println("id = " + rs.getInt("id"));
-                System.out.println("name = " + rs.getString("name"));
-                System.out.println();
-            }
+            // ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
+            // while(rs.next()) {
+            //     // read the result set
+            //     System.out.println("id = " + rs.getInt("id"));
+            //     System.out.println("name = " + rs.getString("name"));
+            //     System.out.println();
+            // }
         }
 
         catch(SQLException e) {
@@ -61,12 +61,12 @@ public class AllDatabase implements databaseInterface {
 
     }
 
-    public int getIndexByName(String name) {
+    public int getIndexByBankID(String bankID) {
         try {
-            ResultSet rs = allStatement.executeQuery("select * from person");
+            ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
             while(rs.next()) {
-                String nameDB = rs.getString("name");
-                if(nameDB.equals(name)) {
+                String bankIDDB = rs.getString("bankid");
+                if(bankIDDB.equals(bankID)) {
                     return rs.getInt("id");
                 }
             }
@@ -76,7 +76,49 @@ public class AllDatabase implements databaseInterface {
         catch(Exception e) {
             System.err.println(e.getMessage());
         }
+        return -1;
+    }
+
+    public String getAccountNumber(int index) {
+
+        try {
+            ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                if(index == id) {
+                    //System.out.println(rs.getString("accnumber"));
+                    return rs.getString("accnumber");
+                }
+            }
+
+            //System.out.println("Person is not registered");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return "";
+
+    }
+
+    public int getPIN(int index) {
+
+        try {
+            ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                if(index == id) {
+                    //System.out.println(rs.getInt("pin"));
+                    return rs.getInt("pin");
+                }
+            }
+
+            //System.out.println("Person is not registered");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
         return 0;
+
     }
 
     public void closeConnection() {
