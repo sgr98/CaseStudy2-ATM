@@ -149,7 +149,6 @@ public class AllDatabase implements databaseInterface {
             preStatement.setInt(1, newbal);
             preStatement.setInt(2, index);
             preStatement.executeUpdate();
-            System.out.println("fashjsafh");
         }
         catch(Exception e) {
             System.err.println(e.getMessage());

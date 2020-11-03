@@ -110,7 +110,7 @@ class ATM {
                 hasBankID = true;
             }
             else if (requiredIndex == -1) {
-                System.out.println("-----------------------------------------");
+                System.out.println("\n-----------------------------------------");
                 System.out.println("Entered Bank ID does not exists");
                 System.out.println("-----------------------------------------");
             }
@@ -225,11 +225,12 @@ class ATM {
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
             System.out.println("Your balance is : " + customer.getBalance());
             System.out.println("Please enter the amount of money you want to withdraw");
+
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 
             int with = in.nextInt();
 
-            if(with <= customer.getBalance()) {
+            if(with <= customer.getBalance() && with > 0) {
                 int newBalance = customer.getBalance() - with;
                 setCustomerBalance(newBalance);
                 AllDB.updateBalance(requiredIndex, newBalance);
@@ -237,6 +238,9 @@ class ATM {
                 // System.out.println("Customer Balance : " + customer.getBalance());
                 // System.out.println("AllBankTable Balance : " + AllDB.getBalance(requiredIndex));
                 // System.out.println("BankTable Balance : " + BankDB.getBalance(requiredIndex));
+                break;
+            }
+            else if(with == 0) {
                 break;
             }
             else {
@@ -253,8 +257,96 @@ class ATM {
         while(true) {
 
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-            System.out.println("Please enter the amount of money you want to withdraw");
+            System.out.println("Press 1 to deposit money to self");
+            System.out.println("Press 2 to transfer money to another account from your account");
+            System.out.println("Press 3 to deposit money into another account");
+            System.out.println("Press 0 to to go back");
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+
+            int depinput = in.nextInt();
+
+            if(depinput == 1) {
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                System.out.println("Enter the amount of money you want to deposit");
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+
+                int dep = in.nextInt();
+                int newBalance = customer.getBalance() + dep;
+                setCustomerBalance(newBalance);
+                AllDB.updateBalance(requiredIndex, newBalance);
+                BankDB.updateBalance(requiredIndex, newBalance);
+            }
+
+            else if(depinput == 2) {
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                System.out.println("Enter the bank ID of the person you want to transfer money to");
+                System.out.println("Enter the amount of money you are transfering :");
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+
+                String anotherBankID = in.next();
+                int toIndex = AllDB.getIndexByBankID(anotherBankID);
+                int amount = in.nextInt();
+
+                boolean exist = true;
+                if (toIndex == -1) {
+                    System.out.println("\n-----------------------------------------");
+                    System.out.println("Entered Bank ID does not exists");
+                    System.out.println("-----------------------------------------");
+                    exist = false;
+                }
+
+                if(exist) {
+                    
+                    if(amount <= customer.getBalance()) {
+                        int newBalance = customer.getBalance() - amount;
+                        setCustomerBalance(newBalance);
+                        AllDB.updateBalance(requiredIndex, newBalance);
+                        BankDB.updateBalance(requiredIndex, newBalance);
+
+                        int gained = AllDB.getBalance(toIndex) + amount;
+                        AllDB.updateBalance(toIndex, gained);
+                        BankDB.updateBalance(toIndex, gained);
+                    }
+                    else {
+                        System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                        System.out.println("Transaction Failed! The entered amount is greater than your balance");
+                        System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                    }
+
+                }
+            }
+
+            else if(depinput == 3) {
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                System.out.println("Enter the accountNumber into which you want to deposit money into");
+                System.out.println("Enter the amount of money you are depositing : ");
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+
+                String anotherBankID = in.next();
+                int toIndex = AllDB.getIndexByBankID(anotherBankID);
+                int amount = in.nextInt();
+
+                boolean exist = true;
+                if (toIndex == -1) {
+                    System.out.println("\n-----------------------------------------");
+                    System.out.println("Entered Bank ID does not exists");
+                    System.out.println("-----------------------------------------");
+                    exist = false;
+                }
+
+                if(exist) {
+                    int gained = AllDB.getBalance(toIndex) + amount;
+                    AllDB.updateBalance(toIndex, gained);
+                    BankDB.updateBalance(toIndex, gained);
+                }
+            }
+
+            else if(depinput == 0) {
+                break;
+            }
+            else {
+                System.out.println("Please enter a valid instruction");
+            }
 
         }
 
