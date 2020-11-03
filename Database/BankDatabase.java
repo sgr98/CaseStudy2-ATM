@@ -114,6 +114,74 @@ public class BankDatabase implements databaseInterface{
 
     }
 
+    public int getBalance(int index) {
+
+        try {
+            ResultSet rs1 = bankstatement.executeQuery("select * from BankTable");
+            while(rs1.next()) {
+                int id = rs1.getInt("id");
+                if(index == id) {
+                    //System.out.println(rs1.getInt("pin"));
+                    return rs1.getInt("balance");
+                }
+            }
+
+            //System.out.println("Person is not registered");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+
+    }
+
+    public String getBankID(int index) { // Get bank ID from an index form the bank's index
+        
+        try {
+            ResultSet rs1 = bankstatement.executeQuery("select * from BankTable");
+            while(rs1.next()) {
+                int id = rs1.getInt("id");
+                if(index == id) {
+                    //System.out.println(rs1.getString("accnumber"));
+                    return rs1.getString("bankid");
+                }
+            }
+
+            //System.out.println("Person is not registered");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return "";
+
+    }
+
+    public void updateBalance(int index, int newbal) {
+
+        if(ifExists(index)) {
+            String updbal = "update BankTable SET balance = ? WHERE id = ?";
+            try {
+                PreparedStatement preStatement = bankConnection.prepareStatement(updbal);
+                preStatement.setInt(1, newbal);
+                preStatement.setInt(2, index);
+                preStatement.executeUpdate();
+            }
+            catch(Exception e) {
+                System.err.println(e.getMessage());
+            }
+        }
+    }
+
+    public boolean ifExists(int index) { // To check whether the bankId with this index exists in bank's database or not
+
+        if(getBankID(index).equals("")) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+
     public void closeConnection() {
 
         try {

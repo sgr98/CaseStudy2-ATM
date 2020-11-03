@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import Database.BankDatabase;
 import Database.AllDatabase;
 import customer.Customer;
@@ -19,6 +18,7 @@ class ATM {
     private AllDatabase AllDB;
     private int requiredIndex;
     private boolean completedOps = false;
+    private static Customer customer; // There can only be one customer at an ATM at a time. Hence static
 
     ATM() {
         in = new Scanner(System.in);
@@ -26,6 +26,7 @@ class ATM {
         BankDB.establishDB();
         AllDB = new AllDatabase();
         AllDB.establishDB();
+        customer = new Customer();
     }
 
     private void closeBank() {
@@ -76,6 +77,14 @@ class ATM {
                 bankenterance();
             }
 
+            //New Customer comes in or the one who hasn't logged in continues
+            completedOps = false;
+            requiredIndex = 0;
+            customer.setAccountNumber("");
+            customer.setBalance(0);
+            customer.setBankID("");
+            customer.setIndex(0);
+
         }
 
     }
@@ -107,7 +116,13 @@ class ATM {
             }
 
             if(hasBankID) { // if bank ID exists
+                customer.setBankID(bIDInput);
+                customer.setIndex(requiredIndex);
                 login();
+            }
+
+            if(completedOps) {
+                break;
             }
 
         }
@@ -135,11 +150,17 @@ class ATM {
 
             if(accn.equals(AllDB.getAccountNumber(requiredIndex)) && pin == AllDB.getPIN(requiredIndex)) {
                 //System.out.println("Index = " + requiredIndex);
+                customer.setAccountNumber(accn);
+                //customer.setPIN(pin);
                 screen();
             }
             else {
                 System.out.println("The entered Account Number or PIN is WRONG");
                 System.out.println("Please try again");
+            }
+
+            if(completedOps) {
+                break;
             }
 
         }
@@ -150,10 +171,89 @@ class ATM {
 
         while(true) {
 
+            setCustomerBalance();
+
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-            System.out.println("Please enter your Account Number");
-            System.out.println("Please enter your PIN");
-            System.out.println("Press 0 to go back");
+            System.out.println("Welcome to your Account. What would you like to use : ");
+            System.out.println("Press 1 to check BALANCE");
+            System.out.println("Press 2 to WITHDRAW money");
+            System.out.println("Press 3 to DEPOSIT/TRANSFER");
+            System.out.println("Press 0 to exit");
+            System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+
+            int decide = in.nextInt();
+
+            if(decide == 1) {
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                System.out.println("Your balance is : " + customer.getBalance());
+                System.out.println("Press anything to continue");
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                in.next();
+            }
+            else if(decide == 2) {
+                withdraw();
+            }
+            else if(decide == 3) {
+                deposit();
+            }
+
+            else if(decide == 0) {
+                completedOps = true;
+                break;
+            }
+            else {
+                System.out.println("Please enter a valid instruction");
+            }
+
+        }
+
+    }
+
+    public void setCustomerBalance() {
+        int bal = AllDB.getBalance( customer.getIndex() );
+        customer.setBalance(bal);
+    }
+
+    public void setCustomerBalance(int bal) {
+        customer.setBalance(bal);
+    }
+
+    public void withdraw() {
+
+        while(true) {
+
+            System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+            System.out.println("Your balance is : " + customer.getBalance());
+            System.out.println("Please enter the amount of money you want to withdraw");
+            System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+
+            int with = in.nextInt();
+
+            if(with <= customer.getBalance()) {
+                int newBalance = customer.getBalance() - with;
+                setCustomerBalance(newBalance);
+                AllDB.updateBalance(requiredIndex, newBalance);
+                BankDB.updateBalance(requiredIndex, newBalance);
+                // System.out.println("Customer Balance : " + customer.getBalance());
+                // System.out.println("AllBankTable Balance : " + AllDB.getBalance(requiredIndex));
+                // System.out.println("BankTable Balance : " + BankDB.getBalance(requiredIndex));
+                break;
+            }
+            else {
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+                System.out.println("Transaction Failed! The entered amount is greater than your balance");
+                System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+            }
+        }
+
+    }
+
+    public void deposit() {
+
+        while(true) {
+
+            System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+            System.out.println("Please enter the amount of money you want to withdraw");
             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
 
         }

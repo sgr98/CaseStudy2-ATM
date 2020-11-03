@@ -121,6 +121,41 @@ public class AllDatabase implements databaseInterface {
 
     }
 
+    public int getBalance(int index) {
+
+        try {
+            ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                if(index == id) {
+                    //System.out.println(rs.getInt("pin"));
+                    return rs.getInt("balance");
+                }
+            }
+
+            //System.out.println("Person is not registered");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+
+    }
+
+    public void updateBalance(int index, int newbal) {
+        String updbal = "update AllBankTable SET balance = ? WHERE id = ?";
+        try {
+            PreparedStatement preStatement = allConnection.prepareStatement(updbal);
+            preStatement.setInt(1, newbal);
+            preStatement.setInt(2, index);
+            preStatement.executeUpdate();
+            System.out.println("fashjsafh");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     public void closeConnection() {
 
         try {

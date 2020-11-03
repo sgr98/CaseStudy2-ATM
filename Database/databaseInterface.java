@@ -6,4 +6,6 @@ public interface databaseInterface {
     public void closeConnection();
     public String getAccountNumber(int index);
     public int getPIN(int index);
+    public int getBalance(int index);
+    public void updateBalance(int index, int newbal);
 }
