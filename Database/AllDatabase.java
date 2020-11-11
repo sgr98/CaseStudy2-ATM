@@ -171,4 +171,29 @@ public class AllDatabase implements databaseInterface {
 
     }
 
+    public boolean isBankCustomer(int index) {
+
+        try {
+            ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
+            while(rs.next()) {
+
+                int id = rs.getInt("id");
+                if(id == index) {
+                    String accnum = rs.getString("accnumber");
+                    String bank = accnum.substring(0, 2);
+                    if(bank.equals("01"))
+                        return true;
+                    break;
+                }
+            }
+            //System.out.println("Person is not registered");
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+        return false;
+
+    }
+
 }

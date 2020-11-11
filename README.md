@@ -36,3 +36,10 @@ For GUI : I used javax.swing and I referred to several websites to know how the 
 
 Made some updates to the database.
 Also deleted the BankDatabase.
+
+### Caution: 
+After a few runs the swing window is becomig extremely slow and always repeating a process multiple times. I do not know its cause. I might be causing it because I do know how exactly it works. Personally I like the modern method where you can dag and drop and set its xml attributes, the way that had been done in Android Studio and how you are able to add a function to onClick and change AppComp.
+
+
+The decided rate for charging other ATM cards is 2%.
+
