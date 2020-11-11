@@ -26,19 +26,19 @@ public class AllDatabase implements databaseInterface {
 
             // DATABASE FORMED *********
             // allStatement.executeUpdate("drop table if exists AllBankTable");
-            // allStatement.executeUpdate("create table AllBankTable (id integer, name varchar(255), nationalid varchar(255), bankid varchar(255), accnumber varchar(255), pin integer, balance integer)");
-            // allStatement.executeUpdate("insert into AllBankTable values(1, 'Sagar Singh', 'IN001', 'SA001', '01001', 9080, 5000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(2, 'Ramesh Singh', 'IN002', 'SA002', '01002', 1010, 20000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(3, 'Anuja Singh', 'IN003', 'SA003', '01110', 9587, 2100)");
-            // allStatement.executeUpdate("insert into AllBankTable values(4, 'Janed Singh', 'IN004', 'SA004', '01115', 3582, 3000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(5, 'Vinod Singh', 'IN005', 'SA005', '01220',1302, 2000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(6, 'Rohan Singh', 'IN006', 'SA006', '01200', 1125, 1500)");
-            // allStatement.executeUpdate("insert into AllBankTable values(7, 'Hemant Singh', 'IN007', 'SA007', '01119', 7998, 7000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(8, 'Sachin Singh', 'IN008', 'SA008', '01120', 8251, 11000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(9, 'Pooja Singh', 'IN009', 'RR009', '02100', 9999, 23000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(10, 'Pranit Singh', 'IN010', 'JC010', '03050', 1221, 8000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(11, 'Nawaz Singh', 'IN011', 'RR011', '02099', 1552, 10000)");
-            // allStatement.executeUpdate("insert into AllBankTable values(12, 'Jyoti Singh', 'IN012', 'JC012', '03300', 4605, 2500)");
+            // allStatement.executeUpdate("create table AllBankTable (id integer, name varchar(255), nationalid varchar(255), accnumber varchar(255), pin integer, balance integer)");
+            // allStatement.executeUpdate("insert into AllBankTable values(1, 'Sagar Singh', 'IN001', '01001', 9080, 5000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(2, 'Ramesh Singh', 'IN002', '01002', 1010, 20000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(3, 'Anuja Singh', 'IN003', '01110', 9587, 2100)");
+            // allStatement.executeUpdate("insert into AllBankTable values(4, 'Janed Singh', 'IN004', '01115', 3582, 3000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(5, 'Vinod Singh', 'IN005', '01220',1302, 2000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(6, 'Rohan Singh', 'IN006', '01200', 1125, 1500)");
+            // allStatement.executeUpdate("insert into AllBankTable values(7, 'Hemant Singh', 'IN007', '01119', 7998, 7000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(8, 'Sachin Singh', 'IN008', '01120', 8251, 11000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(9, 'Pooja Singh', 'IN009', '02100', 9999, 23000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(10, 'Pranit Singh', 'IN010', '03050', 1221, 8000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(11, 'Nawaz Singh', 'IN011', '02099', 1552, 10000)");
+            // allStatement.executeUpdate("insert into AllBankTable values(12, 'Jyoti Singh', 'IN012', '03300', 4605, 2500)");
 
             // ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
             // while(rs.next()) {
@@ -61,12 +61,12 @@ public class AllDatabase implements databaseInterface {
 
     }
 
-    public int getIndexByBankID(String bankID) {
+    public int getIndexByAccountNumber(String AccnNum) {
         try {
             ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
             while(rs.next()) {
-                String bankIDDB = rs.getString("bankid");
-                if(bankIDDB.equals(bankID)) {
+                String bankIDDB = rs.getString("accnumber");
+                if(bankIDDB.equals(AccnNum)) {
                     return rs.getInt("id");
                 }
             }
@@ -101,6 +101,8 @@ public class AllDatabase implements databaseInterface {
     }
 
     public int getPIN(int index) {
+
+        //String pinStatement = "select pin WHERE id = ?";
 
         try {
             ResultSet rs = allStatement.executeQuery("select * from AllBankTable");
