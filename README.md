@@ -43,3 +43,26 @@ After a few runs the swing window is becomig extremely slow and always repeating
 
 The decided rate for charging other ATM cards is 2%.
 
+I am adding OTP Transaction to only 'Transfer to money' and 'Deposit to Another Account'.
+
+### Constraints that I completed:
+
+Individual : 
+1. Added GUI
+2. Create an interface for the screen. (I just used one method which is local to screen and the rest in subclasses).
+3. Add option of banks, if it same bank atm card eg Sagar bank, place no charging fees. If the different atm card, charge processing fees. 
+4. Give a mini statement option, which will show the last 3 transactions of the user. (Pending)
+
+Common :
+1. Adding phone number to get OTP which is used as two-step verification before any transaction
+done (generate otp via function) (Pending)
+2. Add a method to change PIN and other basic details (Pending)
+3. Add IFSC code to transfer money.
+
+### Bugs:
+The app works really great the first time its launched but the 'Deposit to Self' fails sometime due to some reason I cannot figure out and never updates the customer balance.
+
+I know its an ATM. It has to be perfectly reliable but its my first time working with a GUI which is causing half the problems, so... have mercy on me.
+
+## Note : I haven't updated any of the case diagrams
+Its Thursday 6 AM. I am 6 hours past deadline awoke for 4 hours past my sleep time with cold and I do not feel that I have enough energy to write comments on my methods. I wish you good luck for reading around 1600+ lines of code times the strength of the class.

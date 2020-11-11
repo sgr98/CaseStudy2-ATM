@@ -3,7 +3,6 @@ package customer;
 public class Customer {
     
     private int index;
-    private String bankId;
     private String accNum;
     private int balance;
 
@@ -13,10 +12,6 @@ public class Customer {
 
     public int getIndex() { // TO get index pointing in the datebase
         return index;
-    }
-
-    public void setBankID(String bid) { // TO set Bank ID pointing in the datebase
-        this.bankId = bid;
     }
 
     public void setAccountNumber(String accountNumber) { // TO set Acoount Number pointing in the datebase

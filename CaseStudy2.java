@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import Database.AllDatabase;
 import customer.Customer;
-import java.lang.*;
+import java.util.Random;
 
 
 import javax.swing.JButton;
@@ -13,7 +13,11 @@ import javax.swing.JTextField;
 
 import java.awt.event.*;
 
-class Screen {
+interface screenInterface {
+    public void closeAllScreens();
+}
+
+class Screen implements screenInterface {
 
     private JFrame welcome;
     private JFrame dissolve;
@@ -25,7 +29,8 @@ class Screen {
     private JFrame depToSelfFrame;
     private JFrame transFrame;
     private JFrame depToAnoFrame;
-
+    private JFrame oTPFrame;
+    private JFrame miniStatementFrame;
 
     public WelcomeScr welcomeScr;
     public DissolveScr dissolveScr;
@@ -37,20 +42,24 @@ class Screen {
     public DepositToSelfScr depositToSelfScr;
     public TransferScr TransferScr;
     public DepositToAnotherScr depositToAnotherScr;
+    public OTPScr oTPScr;
+    public MiniStatementScr miniStatementScr;
 
     public Screen() {
 
         // Creating instance of JFrame
         welcome = new JFrame("Sagar Bank");
-        dissolve = new JFrame("Sagar Bank");
-        login = new JFrame("Sagar Bank");
-        mainMenu = new JFrame("Sagar Bank");
-        balance = new JFrame("Sagar Bank");
-        withdraw = new JFrame("Sagar Bank");
-        deposit = new JFrame("Sagar Bank");
-        depToSelfFrame = new JFrame("Sagar Bank");
-        transFrame = new JFrame("Sagar Bank");
-        depToAnoFrame = new JFrame("Sagar Bank");
+        dissolve = new JFrame("Dissolve");
+        login = new JFrame("Login");
+        mainMenu = new JFrame("Main Menu");
+        balance = new JFrame("Balance");
+        withdraw = new JFrame("Withdraw");
+        deposit = new JFrame("Deposit");
+        depToSelfFrame = new JFrame("Deposit To Self");
+        transFrame = new JFrame("Transfer To Another");
+        depToAnoFrame = new JFrame("Deposit To Another");
+        oTPFrame = new JFrame("OTP");
+        miniStatementFrame = new JFrame("MiniStatement");
 
         welcomeScr = new WelcomeScr();
         dissolveScr = new DissolveScr();
@@ -62,6 +71,8 @@ class Screen {
         depositToSelfScr = new DepositToSelfScr();
         TransferScr = new TransferScr();
         depositToAnotherScr = new DepositToAnotherScr();
+        oTPScr = new OTPScr();
+        miniStatementScr = new MiniStatementScr();
 
     }
 
@@ -100,6 +111,8 @@ class Screen {
             depToSelfFrame.setVisible(false);
             transFrame.setVisible(false);
             depToAnoFrame.setVisible(false);
+            miniStatementFrame.setVisible(false);
+            oTPFrame.setVisible(false);
     
             welcome.setSize(350, 200);
             welcome.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -366,6 +379,7 @@ class Screen {
             depToSelfFrame.setVisible(false);
             transFrame.setVisible(false);
             depToAnoFrame.setVisible(false);
+            miniStatementFrame.setVisible(false);
 
             mainMenu.setSize(270, 300);
             mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -410,7 +424,7 @@ class Screen {
             panel.add(exitButton);
             exitButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    ATM.enter();
+                    ATM.miniStat();
                 }
             });
 
@@ -559,6 +573,7 @@ class Screen {
             depToSelfFrame.setVisible(false);
             transFrame.setVisible(false);
             depToAnoFrame.setVisible(false);
+            oTPFrame.setVisible(false);
 
             deposit.setSize(270, 300);
             deposit.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -618,6 +633,8 @@ class Screen {
         JButton depositButton = new JButton("DEPOSIT");
         JButton back = new JButton("Go Back");
 
+        String depoAmount;
+
         DepositToSelfScr() {
             panel = new JPanel();
         }
@@ -640,13 +657,16 @@ class Screen {
             //Deposit
             depositText.setBounds(30, 80, 200, 30);
             panel.add(depositText);
+            depositText.setText("");
 
             depositButton.setBounds(80, 140, 300, 30);
             panel.add(depositButton);
             depositButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Button Clicked");
-                    //ATM.screen();
+                    //System.out.println("Button Clicked");
+                    depoAmount = depositText.getText();
+                    depositText.setText("");
+                    ATM.depositMoneyToSelf();
                 }
             });
 
@@ -657,6 +677,7 @@ class Screen {
             back.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     //System.out.println("Button Clicked");
+                    depositText.setText("");
                     ATM.deposit();
                 }
             });
@@ -666,6 +687,9 @@ class Screen {
 
         }
 
+        public String getDepositAmount() {
+            return depoAmount;
+        }
     }
 
     public class TransferScr {
@@ -685,6 +709,11 @@ class Screen {
         JButton transferButton = new JButton("TRANSFER");
         JButton back = new JButton("Go Back");
         JLabel message = new JLabel("");
+
+        String toAccnNumber = "";
+        String toIFSC = "";
+        String toTransfer = "";
+
 
         TransferScr() {
             panel = new JPanel();
@@ -734,8 +763,16 @@ class Screen {
             panel.add(transferButton);
             transferButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Button Clicked");
-                    //ATM.screen();
+                    //System.out.println("Button Clicked");
+                    toAccnNumber = accountText.getText();
+                    toIFSC = ifscText.getText();
+                    toTransfer = transferAmountText.getText();
+
+                    accountText.setText("");
+                    ifscText.setText("");
+                    transferAmountText.setText("");
+
+                    ATM.TransferMoney();
                 }
             });
 
@@ -744,6 +781,10 @@ class Screen {
             back.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     //System.out.println("Button Clicked");
+                    setAlertMessage("");
+                    accountText.setText("");
+                    ifscText.setText("");
+                    transferAmountText.setText("");
                     ATM.deposit();
                 }
             });
@@ -756,6 +797,30 @@ class Screen {
 
             transFrame.setVisible(true);
 
+        }
+
+        public void setAlertMessage(String str) {
+            message.setText(str);
+        }
+
+        public String getToAccountNumber() {
+            return toAccnNumber;
+        }
+
+        public String getToIFSC() {
+            return toIFSC;
+        }
+
+        public String getToTransfer() {
+            return toTransfer;
+        }
+
+        public void resetAccnIFSC() {
+            toAccnNumber = "";
+            toAccnNumber = "";
+            accountText.setText("");
+            ifscText.setText("");
+            transferAmountText.setText("");
         }
 
     }
@@ -777,6 +842,10 @@ class Screen {
         JButton depositButton = new JButton("DEPOSIT");
         JButton back = new JButton("Go Back");
         JLabel message = new JLabel("");
+
+        String toAccnNumber = "";
+        String toIFSC = "";
+        String toDeposit = "";
 
         DepositToAnotherScr() {
             panel = new JPanel();
@@ -827,8 +896,18 @@ class Screen {
             panel.add(depositButton);
             depositButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("Button Clicked");
-                    //ATM.screen();
+                    //System.out.println("Button Clicked");
+
+                    toAccnNumber = accountText.getText();
+                    toIFSC = ifscText.getText();
+                    toDeposit = DepositText.getText();
+
+                    accountText.setText("");
+                    ifscText.setText("");
+                    DepositText.setText("");
+
+                    ATM.depositMoneyToAnother();
+
                 }
             });
 
@@ -837,6 +916,10 @@ class Screen {
             back.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     //System.out.println("Button Clicked");
+                    setAlertMessage("");
+                    accountText.setText("");
+                    ifscText.setText("");
+                    DepositText.setText("");
                     ATM.deposit();
                 }
             });
@@ -850,6 +933,166 @@ class Screen {
             depToAnoFrame.setVisible(true);
 
         }
+
+        public void setAlertMessage(String str) {
+            message.setText(str);
+        }
+
+        public String getToAccountNumber() {
+            return toAccnNumber;
+        }
+
+        public String getToIFSC() {
+            return toIFSC;
+        }
+
+        public String getToDeposit() {
+            return toDeposit;
+        }
+
+        public void resetAccnIFSC() {
+            toAccnNumber = "";
+            toAccnNumber = "";
+            accountText.setText("");
+            ifscText.setText("");
+            DepositText.setText("");
+        }
+
+    }
+
+    public class OTPScr {
+
+        JPanel panel;
+        JLabel label = new JLabel("Enter OTP :");
+        JTextField otpText = new JTextField(4);
+        JButton contd = new JButton("Continue");
+        JButton exit = new JButton("Exit");
+
+        OTPScr() {
+            panel = new JPanel();
+        }
+
+        public void otpScreen() {
+
+            depToSelfFrame.setVisible(false);
+            transFrame.setVisible(false);
+            depToAnoFrame.setVisible(false);
+
+            oTPFrame.setSize(300, 200);
+            oTPFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            oTPFrame.add(panel);
+            panel.setLayout(null);
+
+
+            //Label
+            label.setBounds(20, 20, 80, 30);
+            panel.add(label);
+
+            otpText.setBounds(120, 20, 100, 30);
+            panel.add(otpText);
+
+
+            //Button
+            contd.setBounds(80, 70, 120, 30);
+            panel.add(contd);
+            contd.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //System.out.println("Button Clicked");
+                    int otp = ATM.getOTP();
+                    String otpString = "";
+                    while(true) {
+                        otpString = otpText.getText();
+                        if(!otpString.equals("")) {
+                            break;
+                        }
+                    }
+
+                    int otpInput = Integer.parseInt(otpString);
+
+                    if(otpInput == otp) {
+                        System.out.println("To Customer's mobile : Transaction Successfull");
+                        if(ATM.getTrans()) {
+                            ATM.setDepAno(false);
+                            ATM.setTrans(false);
+                            ATM.transactDepositAno();
+                        }
+                        if(ATM.getDepAno()) {
+                            ATM.setDepAno(false);
+                            ATM.setTrans(false);
+                            ATM.transactTransfer();
+                        }
+                    }
+                    else {
+                        System.out.println("To Customer's mobile : Transaction Failed");
+                    }
+
+                    ATM.deposit();
+                }
+            });
+            
+            exit.setBounds(80, 120, 120, 30);
+            panel.add(exit);
+            exit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //System.out.println("Button Clicked");
+                    System.out.println("To Customer's mobile : Transaction Failed");
+                    ATM.deposit();
+                }
+            });
+
+
+            oTPFrame.setVisible(true);
+
+        }
+
+    }
+
+    public class MiniStatementScr {
+
+        JPanel panel;
+        JLabel miniStatement = new JLabel("No transaction performed");
+        JButton exit = new JButton("Exit");
+
+        MiniStatementScr() {
+            panel = new JPanel();
+        }
+
+        public void MiniStatementScreen() {
+
+            mainMenu.setVisible(false);
+
+            miniStatementFrame.setSize(250, 300);
+            miniStatementFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            miniStatementFrame.add(panel);
+            panel.setLayout(null);
+
+
+            //Label
+            miniStatement.setBounds(20, 30, 160, 20);
+            panel.add(miniStatement);
+
+            
+            //Exit
+            exit.setBounds(50, 160, 100, 30);
+            panel.add(exit);
+            exit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //System.out.println("Button Clicked");
+                    ATM.enter();
+                }
+            });
+
+
+            miniStatementFrame.setVisible(true);
+
+        }
+
+        public void setLabel(String str) {
+            miniStatement.setText(str);
+        }
+
 
     }
 
@@ -880,10 +1123,15 @@ class Screen {
 // ATM Class to replicate an ATM
 class ATM {
 
-    private static Scanner in;
+    //private static Scanner in;
     private static AllDatabase AllDB;
     private static int requiredIndex;
+    private static int toIndex;
+
     private static boolean completedOps = false;
+    private static boolean transferCompletedOps = false;
+    private static boolean DepositCompletedOps = false;
+
     private static Customer customer; // There can only be one customer at an ATM at a time. Hence static
 
     private static Screen screen;
@@ -891,8 +1139,15 @@ class ATM {
     public static boolean test = false;
     final private static int charge = 2;
 
+    private static String t = "";
+    private static String d = "";
+    private static int otpInteger = 0;
+
+    private static boolean isTrans = false;
+    private static boolean isDepAno = false;
+
     ATM() {
-        in = new Scanner(System.in);
+        //in = new Scanner(System.in);
         AllDB = new AllDatabase();
         AllDB.establishDB();
         customer = new Customer();
@@ -912,7 +1167,7 @@ class ATM {
     public static void enter() { // To demonstrate a customer entering an ATM
 
             screen.welcomeScr.welcomeScreen();
-
+            
             //New Customer comes in or the one who hasn't logged in continues
             completedOps = false;
             requiredIndex = 0;
@@ -985,6 +1240,9 @@ class ATM {
         screen.mainMenuScr.mainMenuScreen();
 
         setCustomerBalance();
+        transferCompletedOps = false;
+        DepositCompletedOps = false;
+        toIndex = 0;
 
     }
 
@@ -1011,36 +1269,41 @@ class ATM {
         AllDB.updateBalance(requiredIndex, newBalance);
     }
 
+    public static void updateToSenderBalance(int amount, int ind) {
+        int newBalance = AllDB.getBalance(ind) + amount;
+        AllDB.updateBalance(ind, newBalance);
+    }
+
     public static void withdraw() { // To withdraw money from your account
 
-            screen.withdrawScr.withdrawScreen();
+        screen.withdrawScr.withdrawScreen();
 
-            String withAmount = screen.withdrawScr.getWithdrawAmount();
+        String withAmount = screen.withdrawScr.getWithdrawAmount();
 
-            if(withAmount.equals("")) {
-                //screen.withdrawScr.setAlertMessage("Please enter a withdrawal amount");
-            }
-            else {
-                try{
-                    int with = Integer.parseInt(withAmount);
-                    if(!AllDB.isBankCustomer(customer.getIndex())) {
-                        with += (with * charge / 100);
-                    }
-                    with *= -1;
-                    int bal = ATM.getCustomerBalance();
-                    if(bal + with >= 0) {
-                        ATM.updateCustomerBalance(with);
-                        screen.withdrawScr.setAlertMessage("Please collect your cash from below");
-                    }
-                    else {
-                        screen.withdrawScr.setAlertMessage("Entered Amount is greater than your balance");
-                    }
-
+        if(withAmount.equals("")) {
+            //screen.withdrawScr.setAlertMessage("Please enter a withdrawal amount");
+        }
+        else {
+            try{
+                int with = Integer.parseInt(withAmount);
+                if(!AllDB.isBankCustomer(customer.getIndex())) {
+                    with += (with * charge / 100);
                 }
-                catch(Exception error) {
-                    System.err.println(error.getMessage());;
+                with *= -1;
+                int bal = ATM.getCustomerBalance();
+                if(bal + with >= 0) {
+                    ATM.updateCustomerBalance(with);
+                    screen.withdrawScr.setAlertMessage("Please collect your cash from below");
                 }
+                else {
+                    screen.withdrawScr.setAlertMessage("Entered Amount is greater than your balance");
+                }
+
             }
+            catch(Exception error) {
+                System.err.println(error.getMessage());;
+            }
+        }
         
 
     }
@@ -1048,6 +1311,10 @@ class ATM {
     public static void deposit() { // To deposit money into an account
 
         screen.depositScr.depositScreen();
+        transferCompletedOps = false;
+        DepositCompletedOps = false;
+        toIndex = 0;
+        resetTD();
 
     }
 
@@ -1055,96 +1322,193 @@ class ATM {
 
         screen.depositToSelfScr.DepositToSelfScreen();
 
-        // if(depinput == 1) {
-        //     System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-        //     System.out.println("Enter the amount of money you want to deposit");
-        //     System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+        String depositAmount = "";
+        depositAmount = screen.depositToSelfScr.getDepositAmount();
 
-        //     int dep = in.nextInt();
-        //     int newBalance = customer.getBalance() + dep;
-        //     setCustomerBalance(newBalance);
-        //     AllDB.updateBalance(requiredIndex, newBalance);
-        // }
+        try{
+
+            int deposit = Integer.parseInt(depositAmount);
+            if(!AllDB.isBankCustomer(customer.getIndex())) {
+                deposit -= (deposit * charge / 100);
+            }
+            ATM.updateCustomerBalance(deposit);
+
+        }
+        catch(Exception error) {
+            //System.err.println(error.getMessage());;
+        }
 
     }
 
     public static void TransferMoney() {
      
-        screen.TransferScr.TransferScreen();
+        String toAccn = screen.TransferScr.getToAccountNumber();
+        String toIFSC = screen.TransferScr.getToIFSC();
+        t = screen.TransferScr.getToTransfer();
 
-        // else if(depinput == 2) {
-        //     System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-        //     System.out.println("Enter the bank ID of the person you want to transfer money to");
-        //     System.out.println("Enter the amount of money you are transfering :");
-        //     System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+        if(toAccn.equals("") && toIFSC.equals("")) {
+            toIndex = 0;
+            screen.TransferScr.setAlertMessage("");
+        }
+        else {
+            toIndex = AllDB.getIndexByAccountNumber(toAccn);
+        }
 
-        //     String anotherBankID = in.next();
-        //     int toIndex = AllDB.getIndexByAccountNumber(anotherBankID);
-        //     int amount = in.nextInt();
+        if(toIndex <= 0) {
+            screen.TransferScr.setAlertMessage("Entered Account Number is invalid");
+        }
 
-        //     boolean exist = true;
-        //     if (toIndex == -1) {
-        //         System.out.println("\n-----------------------------------------");
-        //         System.out.println("Entered Bank ID does not exists");
-        //         System.out.println("-----------------------------------------");
-        //         exist = false;
-        //     }
+        else {
 
-        //     if(exist) {
-                
-        //         if(amount <= customer.getBalance()) {
-        //             int newBalance = customer.getBalance() - amount;
-        //             setCustomerBalance(newBalance);
-        //             AllDB.updateBalance(requiredIndex, newBalance);
+            if(toAccn.equals(AllDB.getAccountNumber(toIndex)) && toIFSC.equals(AllDB.getIFSC(toIndex))) {
+                //System.out.println("Index = " + toIndex);
+                screen.TransferScr.setAlertMessage("");
+                screen.TransferScr.resetAccnIFSC();
+                transferCompletedOps = true;
+                setTrans(true);
+                startOTP();
+            }
 
-        //             int gained = AllDB.getBalance(toIndex) + amount;
-        //             AllDB.updateBalance(toIndex, gained);
-        //         }
-        //         else {
-        //             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-        //             System.out.println("Transaction Failed! The entered amount is greater than your balance");
-        //             System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-        //         }
+            else if(!toAccn.equals("") && !toIFSC.equals("")) {
+                screen.TransferScr.setAlertMessage("Entered IFSC is invalid");
+            }
+            
+        }
 
-        //     }
-        // }
+        if(!transferCompletedOps) {
+            screen.TransferScr.TransferScreen();
+        }
 
     }
 
     public static void depositMoneyToAnother() {
-    
-        screen.depositToAnotherScr.DepositToAnotherScreen();
 
-        // else if(depinput == 3) {
-        //     System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
-        //     System.out.println("Enter the accountNumber into which you want to deposit money into");
-        //     System.out.println("Enter the amount of money you are depositing : ");
-        //     System.out.println("\nxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\n");
+        String toAccn = screen.depositToAnotherScr.getToAccountNumber();
+        String toIFSC = screen.depositToAnotherScr.getToIFSC();
+        d = screen.depositToAnotherScr.getToDeposit();
 
-        //     String anotherBankID = in.next();
-        //     int toIndex = AllDB.getIndexByAccountNumber(anotherBankID);
-        //     int amount = in.nextInt();
+        if(toAccn.equals("") && toIFSC.equals("")) {
+            toIndex = 0;
+            screen.TransferScr.setAlertMessage("");
+        }
+        else {
+            toIndex = AllDB.getIndexByAccountNumber(toAccn);
+        }
 
-        //     boolean exist = true;
-        //     if (toIndex == -1) {
-        //         System.out.println("\n-----------------------------------------");
-        //         System.out.println("Entered Bank ID does not exists");
-        //         System.out.println("-----------------------------------------");
-        //         exist = false;
-        //     }
+        if(toIndex <= 0) {
+            screen.depositToAnotherScr.setAlertMessage("Entered Account Number is invalid");
+        }
 
-        //     if(exist) {
-        //         int gained = AllDB.getBalance(toIndex) + amount;
-        //         AllDB.updateBalance(toIndex, gained);
-        //     }
-        // }
+        else {
 
-        // else if(depinput == 0) {
-        //     break;
-        // }
-        // else {
-        //     System.out.println("Please enter a valid instruction");
-        // }
+            if(toAccn.equals(AllDB.getAccountNumber(toIndex)) && toIFSC.equals(AllDB.getIFSC(toIndex))) {
+                //System.out.println("Index = " + toIndex);
+                screen.depositToAnotherScr.setAlertMessage("");
+                screen.depositToAnotherScr.resetAccnIFSC();
+                DepositCompletedOps = true;
+                setDepAno(true);
+                startOTP();
+            }
+
+            else if(!toAccn.equals("") && !toIFSC.equals("")) {
+                screen.depositToAnotherScr.setAlertMessage("Entered IFSC is invalid");
+            }
+            
+        }
+
+        if(!DepositCompletedOps) {
+            screen.depositToAnotherScr.DepositToAnotherScreen();
+        }
+
+    }
+
+    public static void setTrans(boolean b) {
+        isTrans = b;
+    }
+
+    public static boolean getTrans() {
+        return isTrans;
+    }
+
+    public static void setDepAno(boolean b) {
+        isDepAno = b;
+    }
+
+    public static boolean getDepAno() {
+        return isDepAno;
+    }
+
+    public static void startOTP() {
+
+        Random rand = new Random();
+
+        while(otpInteger < 1000) {
+            otpInteger = rand.nextInt(10000);
+        }
+        System.out.println("To Customer's mobile : Sagar bank sends you an OTP :" + otpInteger + " to your mobile number :" + AllDB.getPhoneNumber(requiredIndex) + " for the account with account number:" + customer.getAccountNumber());
+
+        screen.oTPScr.otpScreen();
+
+    }
+
+    public static int getOTP() {
+        return otpInteger;
+    }
+
+    public static void resetTD() {
+        t = "";
+        d = "";
+    }
+
+    public static void transactTransfer() {
+
+        try{
+
+            int deposit = Integer.parseInt(t);
+            deposit *= -1;
+            if(customer.getBalance() + deposit >= 0) {
+                ATM.updateCustomerBalance(deposit);
+                deposit *= -1;
+                if(!AllDB.isBankCustomer(customer.getIndex())) {
+                    deposit -= (deposit * charge / 100);
+                }
+                ATM.updateToSenderBalance(deposit, toIndex);
+            }
+            else {
+                screen.TransferScr.setAlertMessage("The entered amount is greater than your balance");
+            }
+            
+        }
+        catch(Exception error) {
+            //System.err.println(error.getMessage());;
+        }
+
+    }
+
+    public static void transactDepositAno() {
+
+        try{
+
+            int deposit = Integer.parseInt(d);
+            deposit *= -1;
+            ATM.updateCustomerBalance(deposit);
+            deposit *= -1;
+            if(!AllDB.isBankCustomer(customer.getIndex())) {
+                deposit -= (deposit * charge / 100);
+            }
+            ATM.updateToSenderBalance(deposit, toIndex);
+            
+        }
+        catch(Exception error) {
+            //System.err.println(error.getMessage());;
+        }
+
+    }
+
+    public static void miniStat() {
+
+        screen.miniStatementScr.setLabel("Hello World");
+        screen.miniStatementScr.MiniStatementScreen();
 
     }
 
