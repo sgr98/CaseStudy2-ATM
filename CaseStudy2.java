@@ -1,4 +1,4 @@
-import java.util.Scanner;
+//import java.util.Scanner;
 import Database.AllDatabase;
 import customer.Customer;
 import java.util.Random;
@@ -1146,6 +1146,8 @@ class ATM {
     private static boolean isTrans = false;
     private static boolean isDepAno = false;
 
+    public static String miniMessage = "";
+
     ATM() {
         //in = new Scanner(System.in);
         AllDB = new AllDatabase();
@@ -1261,6 +1263,7 @@ class ATM {
 
     public static void balance() {
         screen.balanceScr.balanceScreen();
+        miniMessage += ( "You checked balance : " + String.valueOf(customer.getBalance()) + "\n");
     }
 
     public static void updateCustomerBalance(int amount) {
@@ -1294,6 +1297,7 @@ class ATM {
                 if(bal + with >= 0) {
                     ATM.updateCustomerBalance(with);
                     screen.withdrawScr.setAlertMessage("Please collect your cash from below");
+                    miniMessage += ( "You withdrawed : " + String.valueOf(with) + " + taxes\n");
                 }
                 else {
                     screen.withdrawScr.setAlertMessage("Entered Amount is greater than your balance");
@@ -1331,6 +1335,7 @@ class ATM {
             if(!AllDB.isBankCustomer(customer.getIndex())) {
                 deposit -= (deposit * charge / 100);
             }
+            miniMessage += ( "You deposited : " + String.valueOf(deposit) + " + taxes\n");
             ATM.updateCustomerBalance(deposit);
 
         }
@@ -1365,6 +1370,7 @@ class ATM {
                 screen.TransferScr.setAlertMessage("");
                 screen.TransferScr.resetAccnIFSC();
                 transferCompletedOps = true;
+                miniMessage += ( "You transfered : " + t + " + taxes\n");
                 setTrans(true);
                 startOTP();
             }
@@ -1406,6 +1412,7 @@ class ATM {
                 screen.depositToAnotherScr.setAlertMessage("");
                 screen.depositToAnotherScr.resetAccnIFSC();
                 DepositCompletedOps = true;
+                miniMessage += ( "You transfered : " + d + " + taxes\n");
                 setDepAno(true);
                 startOTP();
             }
@@ -1507,7 +1514,7 @@ class ATM {
 
     public static void miniStat() {
 
-        screen.miniStatementScr.setLabel("Hello World");
+        screen.miniStatementScr.setLabel(miniMessage);
         screen.miniStatementScr.MiniStatementScreen();
 
     }

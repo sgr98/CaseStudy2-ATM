@@ -1,14 +1,14 @@
 AllBank Database Table : 
-id      name                nationalid      bankid          accnumber       pin         balance
-1       'Sagar Singh'       'IN001'         'SA001'         '01001'        9080        5000
-2       'Ramesh Singh'      'IN002'         'SA002'         '01002'        1010        20000
-3       'Anuja Singh'       'IN003'         'SA003'         '01110'        9587        2100
-4       'Janed Singh'       'IN004'         'SA004'         '01115'        3582        3000
-5       'Vinod Singh'       'IN005'         'SA005'         '01220'        1302        2000
-6       'Rohan Singh'       'IN006'         'SA006'         '01200'        1125        1500
-7       'Hemant Singh'      'IN007'         'SA007'         '01119'        7998        7000
-8       'Sachin Singh'      'IN008'         'SA008'         '01120'        8251        11000
-9       'Pooja Singh'       'IN009'         'RR009'         '02100'        9999        23000
-10      'Pranit Singh'      'IN010'         'JC010'         '03050'        1221        8000
-11      'Nawaz Singh'       'IN011'         'RR011'         '02099'        1552        10000
-12      'Jyoti Singh'       'IN012'         'JC012'         '03300'        4605        2500
+id      name                nationalid      bankid          phonenumber        ifsc           accnumber       pin         balance       key
+1       'Sagar Singh'       'IN001'         'SA001'         '111111'           '0101'         '01001'         9080        5000          '000'
+2       'Ramesh Singh'      'IN002'         'SA002'         '111112'           '0101'         '01002'         1010        20000         '000'
+3       'Anuja Singh'       'IN003'         'SA003'         '111113'           '0101'         '01110'         9587        2100          '000'
+4       'Janed Singh'       'IN004'         'SA004'         '111114'           '0101'         '01115'         3582        3000          '000'
+5       'Vinod Singh'       'IN005'         'SA005'         '111115'           '0102'         '01220'         1302        2000          '000'
+6       'Rohan Singh'       'IN006'         'SA006'         '111116'           '0102'         '01200'         1125        1500          '000'
+7       'Hemant Singh'      'IN007'         'SA007'         '111117'           '0103'         '01119'         7998        7000          '000'
+8       'Sachin Singh'      'IN008'         'SA008'         '111118'           '0103'         '01120'         8251        11000         '000'
+9       'Pooja Singh'       'IN009'         'RR009'         '111119'           '0201'         '02100'         9999        23000         '000'
+10      'Pranit Singh'      'IN010'         'JC010'         '111120'           '0301'         '03050'         1221        8000          '000'
+11      'Nawaz Singh'       'IN011'         'RR011'         '111121'           '0201'         '02099'         1552        10000         '000'
+12      'Jyoti Singh'       'IN012'         'JC012'         '111122'           '0302'         '03300'         4605        2500          '000'
