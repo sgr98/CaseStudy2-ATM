@@ -69,4 +69,4 @@ I know its an ATM. It has to be perfectly reliable but its my first time working
 3. Not really a bug but an underuse. So you see I can't reuse my OTP class that well so I could not include it for changing PIN.
 
 ## Note : I haven't updated any of the case diagrams
-Its Thursday 6 AM. I am 6 hours past deadline awoke for 4 hours past my sleep time with cold and I do not feel that I have enough energy to write comments on my methods. I wish you good luck for reading around 1600+ lines of code times the strength of the class.
+Its Thursday 6 AM. I am 6 hours past deadline and awoke for 4 hours past my sleep time with cold and I do not feel that I have enough energy to write comments on my methods. I wish you good luck for reading around 1600+ lines of code times the strength of the class.
