@@ -242,4 +242,19 @@ public class AllDatabase implements databaseInterface {
 
     }
 
+    public void setNewPIN(int index, int pin) {
+
+        String updbal = "update AllBankTable SET pin = ? WHERE id = ?";
+        try {
+            PreparedStatement preStatement = allConnection.prepareStatement(updbal);
+            preStatement.setInt(1, pin);
+            preStatement.setInt(2, index);
+            preStatement.executeUpdate();
+        }
+        catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+    }
+
 }

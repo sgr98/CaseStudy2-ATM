@@ -8,4 +8,8 @@ public interface databaseInterface {
     public int getPIN(int index); // To get the PIN number from DB using the index
     public int getBalance(int index); // To get the current balance from DB using the index
     public void updateBalance(int index, int newbal); // To update balance present in DB during a transaction
+    public boolean isBankCustomer(int index);
+    public String getIFSC(int index);
+    public String getPhoneNumber(int index);
+    public void setNewPIN(int index, int pin);
 }

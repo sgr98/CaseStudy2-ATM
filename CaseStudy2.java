@@ -31,6 +31,7 @@ class Screen implements screenInterface {
     private JFrame depToAnoFrame;
     private JFrame oTPFrame;
     private JFrame miniStatementFrame;
+    private JFrame changePIN;
 
     public WelcomeScr welcomeScr;
     public DissolveScr dissolveScr;
@@ -44,6 +45,7 @@ class Screen implements screenInterface {
     public DepositToAnotherScr depositToAnotherScr;
     public OTPScr oTPScr;
     public MiniStatementScr miniStatementScr;
+    public ChangePINScr changePINscr;
 
     public Screen() {
 
@@ -60,6 +62,7 @@ class Screen implements screenInterface {
         depToAnoFrame = new JFrame("Deposit To Another");
         oTPFrame = new JFrame("OTP");
         miniStatementFrame = new JFrame("MiniStatement");
+        changePIN = new JFrame("Change PIN");
 
         welcomeScr = new WelcomeScr();
         dissolveScr = new DissolveScr();
@@ -73,6 +76,7 @@ class Screen implements screenInterface {
         depositToAnotherScr = new DepositToAnotherScr();
         oTPScr = new OTPScr();
         miniStatementScr = new MiniStatementScr();
+        changePINscr = new ChangePINScr();
 
     }
 
@@ -362,6 +366,7 @@ class Screen implements screenInterface {
         JButton balanceButton = new JButton("Balance");
         JButton withdrawButton = new JButton("Withdraw");
         JButton depositButton = new JButton("Deposit");
+        JButton pINButton = new JButton("Change PIN");
         JButton exitButton = new JButton("Exit");
 
         MainMenuScr() {
@@ -380,8 +385,9 @@ class Screen implements screenInterface {
             transFrame.setVisible(false);
             depToAnoFrame.setVisible(false);
             miniStatementFrame.setVisible(false);
+            changePIN.setVisible(false);
 
-            mainMenu.setSize(270, 300);
+            mainMenu.setSize(270, 350);
             mainMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             mainMenu.add(panel);
@@ -420,7 +426,15 @@ class Screen implements screenInterface {
                 }
             });
 
-            exitButton.setBounds(20, 190, 160, 35);
+            pINButton.setBounds(20, 190, 160, 35);
+            panel.add(pINButton);
+            pINButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    ATM.chPIN();
+                }
+            });
+
+            exitButton.setBounds(20, 230, 160, 35);
             panel.add(exitButton);
             exitButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -1062,7 +1076,7 @@ class Screen implements screenInterface {
 
             mainMenu.setVisible(false);
 
-            miniStatementFrame.setSize(250, 300);
+            miniStatementFrame.setSize(550, 250);
             miniStatementFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
             miniStatementFrame.add(panel);
@@ -1093,6 +1107,91 @@ class Screen implements screenInterface {
             miniStatement.setText(str);
         }
 
+
+    }
+
+    public class ChangePINScr {
+
+        JPanel panel;
+        JLabel label = new JLabel("Enter a 4 digit number as your new PIN : ");
+        JTextField newPin = new JTextField(20);
+        JButton set = new JButton("Set PIN");
+        JButton back = new JButton("Go Back");
+        JLabel message = new JLabel("");
+
+        ChangePINScr() {
+            panel = new JPanel();
+        }
+
+        public void changePINScreen() {
+
+            mainMenu.setVisible(false);
+
+            changePIN.setSize(320, 280);
+            changePIN.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            changePIN.add(panel);
+            panel.setLayout(null);
+
+
+            //Label
+            label.setBounds(20, 10, 280, 30);
+            panel.add(label);
+
+
+            //TextField
+            newPin.setBounds(20, 50, 210, 30);
+            panel.add(newPin);
+
+
+            //Button
+            set.setBounds(90, 110, 100, 30);
+            panel.add(set);
+            set.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //System.out.println("Button Clicked");
+                    String cPin = newPin.getText();
+                    if(!cPin.equals("")) {
+                        try {
+                            int changedPIN = Integer.parseInt(cPin);
+                            if(changedPIN > 999 && changedPIN < 10000) {
+                                ATM.changeToNewPIN(changedPIN);
+                                message.setText("");
+                            }
+                            else {
+                                message.setText("Please enter a valid PIN");
+                            }
+                        }
+                        catch(Exception erroe) {
+                            System.err.println(erroe.getMessage());
+                        }
+                    }
+                    else {
+                        message.setText("Please enter a valid PIN");
+                    }
+                }
+            });
+
+            back.setBounds(90, 150, 100, 30);
+            panel.add(back);
+            back.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    //System.out.println("Button Clicked");
+                    newPin.setText("");
+                    message.setText("");
+                    ATM.screen();
+                }
+            });
+
+
+            //Label
+            message.setBounds(20, 190, 280, 30);
+            panel.add(message);
+
+
+            changePIN.setVisible(true);
+
+        }
 
     }
 
@@ -1169,7 +1268,7 @@ class ATM {
     public static void enter() { // To demonstrate a customer entering an ATM
 
             screen.welcomeScr.welcomeScreen();
-            
+
             //New Customer comes in or the one who hasn't logged in continues
             completedOps = false;
             requiredIndex = 0;
@@ -1517,6 +1616,15 @@ class ATM {
         screen.miniStatementScr.setLabel(miniMessage);
         screen.miniStatementScr.MiniStatementScreen();
 
+    }
+
+    public static void chPIN() {
+        screen.changePINscr.changePINScreen();
+    }
+
+    public static void changeToNewPIN(int cpiN) {
+        AllDB.setNewPIN(customer.getIndex(), cpiN);
+        miniMessage += ( "You transfered changed your PIN" );
     }
 
 }

@@ -56,7 +56,7 @@ Individual :
 Common :
 1. Adding phone number to get OTP which is used as two-step verification before any transaction
 done (generate otp via function) (otp is shown on the command line)
-2. Add a method to change PIN and other basic details (Pending)
+2. Add a method to change PIN and other basic details.
 3. Add IFSC code to transfer money.
 
 ### Bugs:
@@ -65,6 +65,8 @@ done (generate otp via function) (otp is shown on the command line)
 I know its an ATM. It has to be perfectly reliable but its my first time working with a GUI which is causing half the problems, so... have mercy on me.
 
 2. For some reason "\n" doesn't work when you add text in swing. Thus the mini statement will always contain a single line and I do not want to add 3 labels to it. Guess I will learn it later.
+
+3. Not really a bug but an underuse. So you see I can't reuse my OTP class that well so I could not include it for changing PIN.
 
 ## Note : I haven't updated any of the case diagrams
 Its Thursday 6 AM. I am 6 hours past deadline awoke for 4 hours past my sleep time with cold and I do not feel that I have enough energy to write comments on my methods. I wish you good luck for reading around 1600+ lines of code times the strength of the class.
